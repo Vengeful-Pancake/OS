@@ -17,7 +17,7 @@
 void uart_init();
 void uart_sendc(unsigned char c);
 char uart_getc();
+char uart_game_getc();
 void uart_puts(char *s);
 void uart_dec(int num);
 void uart_hex(unsigned int d);
-int compare(char a[],char b[]);

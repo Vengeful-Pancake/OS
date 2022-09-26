@@ -5,6 +5,7 @@
 /* a properly aligned buffer */
 extern volatile unsigned int mBuf[36];
 #define ADDR(X) (unsigned int)((unsigned long) X)
+
 /* Registers */
 #define VIDEOCORE_MBOX (MMIO_BASE + 0x0000B880)
 #define MBOX0_READ ((volatile unsigned int*)(VIDEOCORE_MBOX + 0x00))

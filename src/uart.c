@@ -66,6 +66,28 @@ char uart_getc() {
     return (c == '\r' ? '\n' : c);
 }
 
+char uart_game_getc() {
+    char c;
+    int d;
+
+    /* wait until data is ready (one symbol) */
+    do {
+    	asm volatile("nop");
+        d += 1;
+        if (d==2000){
+            return (c = '\0');
+        }
+    } while ( !(*AUX_MU_LSR & 0x01) );
+
+    /* read it and return */
+    c = (char)(*AUX_MU_IO);
+
+    /* convert carriage return to newline */
+    return (c == '\r' ? '\n' : c);
+}
+
+
+
 /**
  * Display a string
  */
@@ -75,9 +97,14 @@ void uart_puts(char *s) {
         if (*s == '\n')
             uart_sendc('\r');
         uart_sendc(*s++);
-        
     }
 }
+
+
+
+
+
+
 
 /**
  * Display a binary value in hexadecimal
@@ -123,23 +150,4 @@ void uart_dec(int num)
 
     uart_puts(str);
 }
-
-int compare(char a[],char b[])  
-{  
-    int flag=0,i=0;  // integer variables declaration  
-    while(a[i]!='\0' && b[i]!='\0')  // while loop  
-    {  
-       if(a[i]!=b[i])  
-       {  
-           flag=1;  
-           break;  
-       }  
-       i++;  
-    }  
-    if(flag==0)  
-    return 0;  
-    else  
-    return 1;  
-}
-
 
